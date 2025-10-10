@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-login-form.component.scss']
 })
 export class UserLoginFormComponent implements OnInit {
+  // ✅ Must match your API field names exactly:
   userData = { username: '', password: '' };
 
   constructor(
-    public fetchApiData: FetchApiDataService,
+    private fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
-    public router: Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -23,17 +24,22 @@ export class UserLoginFormComponent implements OnInit {
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe({
       next: (response) => {
-        console.log(response);
-        localStorage.setItem('user', JSON.stringify(response.user));
+        console.log('Login successful:', response);
+
+        // ✅ Store token and user info in localStorage
         localStorage.setItem('token', response.token);
-        this.dialogRef.close(); // close dialog on success
-        this.router.navigate(['movies']); // navigate to movies view (later step)
+        localStorage.setItem('user', JSON.stringify(response.user));
+
+        // ✅ Close the dialog
+        this.dialogRef.close();
+
+        // ✅ Navigate to movies page (after login)
+        this.router.navigate(['movies']);
       },
       error: (error) => {
-        console.error(error);
-        alert('Login failed. Please check your credentials.');
+        console.error('Login failed:', error);
+        alert('Login failed. Please check your username and password.');
       }
     });
   }
 }
-
