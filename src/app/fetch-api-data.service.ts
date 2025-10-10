@@ -10,6 +10,7 @@ const apiUrl = 'https://myflix-movieapi.onrender.com/';
   providedIn: 'root'
 })
 export class FetchApiDataService {
+  private apiUrl = 'https://myflix-movieapi.onrender.com';
   constructor(private http: HttpClient) {}
 
   // ======= User endpoints =======
