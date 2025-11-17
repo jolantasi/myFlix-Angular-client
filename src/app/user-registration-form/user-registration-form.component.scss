@@ -1,0 +1,39 @@
+mat-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  border-radius: 12px;
+}
+
+mat-card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  margin: -16px -16px 1rem -16px;
+  border-radius: 12px 12px 0 0;
+  
+  mat-card-title {
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}
+
+mat-card-content {
+  padding: 2rem 1.5rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+mat-card-actions {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+button {
+  min-width: 120px;
+}

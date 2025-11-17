@@ -1,0 +1,67 @@
+<div class="dialog-container">
+  <!-- Genre Dialog -->
+  <div *ngIf="data.type === 'genre'" class="dialog-content">
+    <h2 mat-dialog-title>
+      <mat-icon>movie_filter</mat-icon>
+      {{ data.genre?.name || 'Genre' }}
+    </h2>
+    <mat-dialog-content>
+      <p class="description">{{ data.genre?.description || 'No description available.' }}</p>
+    </mat-dialog-content>
+  </div>
+
+  <!-- Director Dialog -->
+  <div *ngIf="data.type === 'director'" class="dialog-content">
+    <h2 mat-dialog-title>
+      <mat-icon>person</mat-icon>
+      {{ data.director?.name || 'Director' }}
+    </h2>
+    <mat-dialog-content>
+      <div class="director-info">
+        <p><strong>Bio:</strong></p>
+        <p class="description">{{ data.director?.bio || 'No bio available.' }}</p>
+        
+        <p *ngIf="data.director?.birth"><strong>Born:</strong> {{ data.director.birth | date }}</p>
+        <p *ngIf="data.director?.death"><strong>Died:</strong> {{ data.director.death | date }}</p>
+      </div>
+    </mat-dialog-content>
+  </div>
+
+  <!-- Movie Details Dialog -->
+  <div *ngIf="data.type === 'movie'" class="dialog-content movie-details">
+    <h2 mat-dialog-title>
+      <mat-icon>movie</mat-icon>
+      {{ data.movie?.title || 'Movie Details' }}
+    </h2>
+    <mat-dialog-content>
+      <div class="movie-info">
+        <img 
+          *ngIf="data.movie?.imageUrl" 
+          [src]="data.movie.imageUrl" 
+          [alt]="data.movie.title"
+          class="movie-poster">
+        
+        <div class="info-section">
+          <p><strong>Description:</strong></p>
+          <p class="description">{{ data.movie?.description || 'No description available.' }}</p>
+          
+          <p *ngIf="data.movie?.genre"><strong>Genre:</strong> {{ data.movie.genre.name }}</p>
+          <p *ngIf="data.movie?.director"><strong>Director:</strong> {{ data.movie.director.name }}</p>
+          
+          <div *ngIf="data.movie?.actors && data.movie.actors.length > 0">
+            <p><strong>Actors:</strong></p>
+            <ul class="actors-list">
+              <li *ngFor="let actor of data.movie.actors">{{ actor }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="closeDialog()">
+      Close
+    </button>
+  </mat-dialog-actions>
+</div>

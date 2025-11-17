@@ -11,10 +11,11 @@ const apiUrl = 'https://myflix-movieapi.onrender.com/';
 })
 export class FetchApiDataService {
   private apiUrl = 'https://myflix-movieapi.onrender.com';
+
   constructor(private http: HttpClient) {}
 
   // ======= User endpoints =======
-
+  
   // User registration
   public userRegistration(userDetails: any): Observable<any> {
     return this.http.post(apiUrl + 'users', userDetails).pipe(
@@ -51,7 +52,7 @@ export class FetchApiDataService {
   }
 
   // ======= Movie endpoints =======
-
+  
   // Get all movies
   public getAllMovies(): Observable<any> {
     return this.http.get(apiUrl + 'movies', this.getAuthHeaders()).pipe(
@@ -81,7 +82,7 @@ export class FetchApiDataService {
   }
 
   // ======= Favorites =======
-
+  
   // Get favorite movies for a user
   public getFavoriteMovies(username: string): Observable<any> {
     return this.http.get(apiUrl + 'users/' + username + '/movies', this.getAuthHeaders()).pipe(
@@ -104,9 +105,9 @@ export class FetchApiDataService {
   }
 
   // ======= Helpers =======
-
+  
   private getAuthHeaders() {
-    const token = localStorage.getItem('token'); // token should be saved at login
+    const token = localStorage.getItem('token');
     return {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token
@@ -118,7 +119,8 @@ export class FetchApiDataService {
     if (error.error instanceof ErrorEvent) {
       console.error('Some error occurred:', error.error.message);
     } else {
-      console.error(`Error Status code ${error.status}, Error body is: ${error.error}`);
+      // Fixed: changed backticks to parentheses
+      console.error(`Error Status code ${error.status}, Error body is:`, error.error);
     }
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }

@@ -1,0 +1,52 @@
+<div class="movies-container">
+  <div class="page-header">
+    <h1>Movie Collection</h1>
+    <button mat-raised-button color="primary" routerLink="/profile">
+      <mat-icon>person</mat-icon>
+      My Profile
+    </button>
+  </div>
+  
+  <div class="movies-grid">
+    <mat-card *ngFor="let movie of movies">
+      <img 
+        mat-card-image 
+        [src]="movie.imageUrl || 'https://via.placeholder.com/300x450?text=No+Image'" 
+        [alt]="movie.title"
+        class="movie-image">
+      
+      <mat-card-header>
+        <mat-card-title>{{ movie.title }}</mat-card-title>
+        <mat-card-subtitle>Directed by: {{ movie.director?.name }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <p>{{ movie.description }}</p>
+        <p class="genre-info" *ngIf="movie.genre">
+          <strong>Genre:</strong> {{ movie.genre.name }}
+        </p>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="openGenreDialog(movie)">
+          <mat-icon>movie_filter</mat-icon>
+          Genre
+        </button>
+        <button mat-button color="primary" (click)="openDirectorDialog(movie)">
+          <mat-icon>person</mat-icon>
+          Director
+        </button>
+        <button mat-button color="primary" (click)="openMovieDetailsDialog(movie)">
+          <mat-icon>info</mat-icon>
+          Details
+        </button>
+        <button 
+          mat-icon-button 
+          [color]="isFavorite(movie._id) ? 'warn' : 'default'"
+          (click)="addToFavorites(movie._id)">
+          <mat-icon>{{ isFavorite(movie._id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

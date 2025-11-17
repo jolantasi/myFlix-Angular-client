@@ -1,18 +1,20 @@
-<div class="main-page">
-  <h1>Welcome to myFlix!</h1>
+<div class="app-container">
+  <header class="navbar">
+    <h2>myFlix</h2>
+    <nav>
+      <button mat-button routerLink="/welcome" routerLinkActive="active-link">
+        Welcome
+      </button>
+      <button mat-button routerLink="/movies" routerLinkActive="active-link">
+        Movies
+      </button>
+      <button mat-button routerLink="/profile" routerLinkActive="active-link">
+        Profile
+      </button>
+    </nav>
+  </header>
 
-  <!-- Signup button -->
-  <button
-    mat-raised-button
-    (click)="openUserRegistrationDialog()"
-    style="margin-right: 10px;"
-    color="primary"
-  >
-    Sign Up
-  </button>
-
-  <!-- Login button -->
-  <button mat-raised-button color="primary" (click)="openUserLoginDialog()">
-  Login
-</button>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
 </div>
