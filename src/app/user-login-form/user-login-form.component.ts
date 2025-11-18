@@ -30,30 +30,33 @@ export class UserLoginFormComponent {
   ) {}
 
   loginUser(): void {
-    this.fetchApiData.userLogin(this.userData).subscribe({
-      next: (resp: any) => {
-        console.log('Login response:', resp);
+  // 👇 map from your form fields (lowercase) to backend fields (capitalized)
+  const loginPayload = {
+    Username: this.userData.username,
+    Password: this.userData.password
+  };
 
-        // optional: Token / User speichern
-        if (resp.token) {
-          localStorage.setItem('token', resp.token);
-        }
-        if (resp.user) {
-          localStorage.setItem('user', JSON.stringify(resp.user));
-        }
+  this.fetchApiData.userLogin(loginPayload).subscribe({
+    next: (resp: any) => {
+      console.log('Login response:', resp);
 
-        this.snackBar.open('Login successful', 'OK', { duration: 2000 });
-
-        // 👇 Dialog schließen
-        this.dialogRef.close();
-
-        // 👇 dann zur Movies-Page
-        this.router.navigate(['movies']);
-      },
-      error: (err: any) => {
-        console.error('Login error:', err);
-        this.snackBar.open('Login failed', 'OK', { duration: 2000 });
+      if (resp.token) {
+        localStorage.setItem('token', resp.token);
       }
-    });
-  }
+      if (resp.user) {
+        localStorage.setItem('user', JSON.stringify(resp.user));
+      }
+
+      this.snackBar.open('Login successful', 'OK', { duration: 2000 });
+
+      this.dialogRef.close();
+      this.router.navigate(['movies']);
+    },
+    error: (err: any) => {
+      console.error('Login error:', err);
+      this.snackBar.open('Login failed', 'OK', { duration: 2000 });
+    }
+  });
+}
+
 }
