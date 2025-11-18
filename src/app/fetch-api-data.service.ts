@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 // Base URL of your API
 const apiUrl = 'https://myflix-movieapi.onrender.com/';
@@ -10,12 +10,10 @@ const apiUrl = 'https://myflix-movieapi.onrender.com/';
   providedIn: 'root'
 })
 export class FetchApiDataService {
-  private apiUrl = 'https://myflix-movieapi.onrender.com';
-
   constructor(private http: HttpClient) {}
 
   // ======= User endpoints =======
-  
+
   // User registration
   public userRegistration(userDetails: any): Observable<any> {
     return this.http.post(apiUrl + 'users', userDetails).pipe(
@@ -52,7 +50,7 @@ export class FetchApiDataService {
   }
 
   // ======= Movie endpoints =======
-  
+
   // Get all movies
   public getAllMovies(): Observable<any> {
     return this.http.get(apiUrl + 'movies', this.getAuthHeaders()).pipe(
@@ -82,7 +80,7 @@ export class FetchApiDataService {
   }
 
   // ======= Favorites =======
-  
+
   // Get favorite movies for a user
   public getFavoriteMovies(username: string): Observable<any> {
     return this.http.get(apiUrl + 'users/' + username + '/movies', this.getAuthHeaders()).pipe(
@@ -97,7 +95,7 @@ export class FetchApiDataService {
     );
   }
 
-  // Delete a movie from the favorite movies
+  // Remove a movie from favorite movies
   public removeFavoriteMovie(username: string, movieId: string): Observable<any> {
     return this.http.delete(apiUrl + 'users/' + username + '/movies/' + movieId, this.getAuthHeaders()).pipe(
       catchError(this.handleError)
@@ -105,7 +103,7 @@ export class FetchApiDataService {
   }
 
   // ======= Helpers =======
-  
+
   private getAuthHeaders() {
     const token = localStorage.getItem('token');
     return {
@@ -115,12 +113,11 @@ export class FetchApiDataService {
     };
   }
 
-  private handleError(error: HttpErrorResponse): any {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.error instanceof ErrorEvent) {
-      console.error('Some error occurred:', error.error.message);
+      console.error('Client-side error:', error.error.message);
     } else {
-      // Fixed: changed backticks to parentheses
-      console.error(`Error Status code ${error.status}, Error body is:`, error.error);
+      console.error(`Server returned code ${error.status}, body was:`, error.error);
     }
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }

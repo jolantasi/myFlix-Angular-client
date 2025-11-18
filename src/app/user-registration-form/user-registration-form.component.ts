@@ -27,12 +27,12 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 })
 export class UserRegistrationFormComponent {
   @Input() userData = { 
-    username: '', 
-    password: '', 
-    email: '', 
-    birthday: '' 
+    username: '',   // lowercase - matches your backend
+    password: '',   // lowercase - matches your backend
+    email: '',      // lowercase - matches your backend
+    Birthday: ''    // Capital B - matches your backend
   };
-  
+
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
@@ -40,16 +40,29 @@ export class UserRegistrationFormComponent {
   ) { }
 
   registerUser(): void {
+    console.log('Registering user with data:', this.userData);
+    
     this.fetchApiData.userRegistration(this.userData).subscribe({
       next: (result) => {
+        console.log('Registration successful:', result);
         this.dialogRef.close();
-        this.snackBar.open('Registration successful!', 'OK', {
-          duration: 2000
+        this.snackBar.open('Registration successful! Please login.', 'OK', {
+          duration: 3000
         });
       },
       error: (error) => {
-        this.snackBar.open('Registration failed', 'OK', {
-          duration: 2000
+        console.error('Registration error:', error);
+        let errorMessage = 'Registration failed';
+        
+        // Check if there are validation errors
+        if (error.error?.errors) {
+          errorMessage = error.error.errors.map((e: any) => e.msg).join(', ');
+        } else if (error.error) {
+          errorMessage = error.error;
+        }
+        
+        this.snackBar.open(errorMessage, 'OK', {
+          duration: 4000
         });
       }
     });
