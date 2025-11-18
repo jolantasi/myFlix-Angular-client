@@ -45,6 +45,8 @@
             type="email"
             [(ngModel)]="user.email" 
             name="email"
+            [disabled]="true"
+            readonly
             required>
         </mat-form-field>
 
@@ -53,7 +55,6 @@
           <input 
             matInput 
             type="password"
-            [(ngModel)]="user.password" 
             name="password"
             placeholder="Leave blank to keep current password">
         </mat-form-field>
