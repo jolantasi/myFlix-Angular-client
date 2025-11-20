@@ -1,0 +1,17 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPointStrategy": "expand",
+  "entryPoints": [
+    "src/app"
+  ],
+  "tsconfig": "tsconfig.json",
+  "out": "docs",
+  "exclude": [
+    "**/*.spec.ts",
+    "**/environment*.ts"
+  ],
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "readme": "none"
+}
