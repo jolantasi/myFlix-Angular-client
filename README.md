@@ -1,5 +1,7 @@
 # MyFlixAngularClient
 
+Full-Stack Movie Application built with Angular (TypeScript) and a custom REST API (Node.js, Express, MongoDB).
+The application allows users to register, log in, browse movies, and manage their profiles while consuming a self-built backend API with JWT authentication.
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
 
 ## Development server
